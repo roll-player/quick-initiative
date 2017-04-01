@@ -1,0 +1,50 @@
+<doctype !html>
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        Height: 100%;
+        Width: 100%;
+      }
+
+      #root {
+        display: flex;
+        align-content: center;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+        align-items: center;
+      }
+
+      .current {
+        font-size: 6em;
+      }
+
+      .next {
+        font-size: 3em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class='current'></div>
+      <div class='next'></div>
+    </div>
+    <script src='/socket.io/socket.io.js'></script>
+    <script type="text/javascript">
+      const socket = io('http://localhost:8080');
+      const current = document.getElementsByClassName('current')[0]
+      const next = document.getElementsByClassName('next')[0]
+      const updateData = data => {
+        current.innerHTML = data.current
+        next.innerHTML = data.next
+      }
+
+      socket.on('round-update', data => updateData(data))
+
+    </script>
+  </body>
+</html>
